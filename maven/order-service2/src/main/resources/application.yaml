@@ -1,0 +1,31 @@
+# 구동 포트 선언
+server:
+  port: 54413
+
+# config server에서 들고있는 정보들 명시
+# ex) 아래와 같이 명시시, git hub 파일 중 order-service-second.yaml 파일에서 정의된 값을 읽어올 수 있음.
+spring:
+  profiles:
+    active: second
+  application:
+    name: order-service
+  config:
+    import: optional:configserver:http://localhost:8888 # config server 설정정보
+
+# actuator 사용을 위한 정의
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
+# Eureka 서버 등록 정보 및 인스턴스 아이디 정의
+eureka:
+  instance:
+    instance-id: order-microservice-instance2
+
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
