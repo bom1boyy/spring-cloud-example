@@ -1,0 +1,9 @@
+# 구동포트 선언 및 config 정보들을 읽어올 github uri 선언
+server:
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/bom1boyy/springCloudTestRepo.git
