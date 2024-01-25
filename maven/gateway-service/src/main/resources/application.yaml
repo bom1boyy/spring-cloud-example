@@ -1,0 +1,31 @@
+# Spring Cloud Gateway 구동 포트
+server:
+  port: 8000
+
+# Eureka 서버에 등록하기 위한 부분
+eureka:
+  client:
+    fetch-registry: true # 유레카 클라이언트 활성화
+    register-with-eureka: true # 유레카 클라이언트 활성화
+    service-url:
+      defaultZone: http://localhost:8761/eureka # 유레카 클라이언트로 등록
+
+# Spring Cloud Gateway 이름 선언
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          # uri: http://localhost:64412 # 포워딩할 주소, http://localhost:8000/user 로 들어오면 http://localhost:64412 로 포워딩
+          uri: lb://USER-SERVICE # 이렇게하면 유레카에서 디스커버리된 서비스id명을 입력해서 해당 정보로로 요청을 하게됨.
+          predicates:
+            - Path=/user/** # 해당 gateway 서버의 /user/**로 들어오는 요은 user-service로 인식하겠다는 조건
+
+        - id: order-service
+          # uri: http://localhost:54412 # 포워딩 할 주소, http://localhost:8000/order 로 들어오면 http://localhost:54412 로 포워딩
+          uri: lb://ORDER-SERVICE # 이렇게하면 유레카에서 디스커버리된 서비스id명을 입력해서 해당 정보로로 요청을 하게됨.
+          predicates:
+            - Path=/order/** # 해당 gateway 서버의 /order/**로 들어오는 요은 order-service로 인식하겠다는 조건
