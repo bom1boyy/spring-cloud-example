@@ -1,0 +1,15 @@
+# Eureka 서버 구동포트 선언
+server:
+  port: 8761
+
+# Eureka 서버의 이름 선언
+spring:
+  application:
+    name: discovery-service
+
+# Eureak 서버에 대한 선언
+# 아래와 같이 선언해야 Eureka Client 가 아닌 Eureka Server 로 인식
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
